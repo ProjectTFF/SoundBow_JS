@@ -11,14 +11,44 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/upload', function(req, res, next) {
-  // res.render('index', { title: 'Express' });
-  // res.send('moroo');
-  // res.sendFile(path.join(__dirname +'../public/upload'), { title: 'Express' });
   res.sendFile('public/upload.html', { root: '.' });
 });
 
 router.get('/reset_sounds', function(req, res, next) {
-  
+  try {
+    const target_directory = path.join(__dirname, '../assets/sounds');
+    const source_directory = path.join(__dirname, '../assets/sounds_original');
+
+    // Delete files from sounds
+    fs.readdir(target_directory, (err, files) => {
+      if (err) throw err;
+
+      for (const file of files) {
+        fs.unlink(path.join(target_directory, file), err => {
+          if (err) throw err;
+        })
+      }
+    })
+
+    // Copy original files from sounds_original to sounds
+    fs.readdir(source_directory, (err, files) => {
+      if (err) throw err;
+
+      for (const file of files) {
+        fs.copyFile(path.join(source_directory, file), path.join(target_directory, file), err => {
+          if (err) throw err;
+        });
+      }
+    })
+
+    res.send('Sound files have been reset.')
+  }
+  catch(err) {
+    console.log(err);
+    throw err;
+  }
+
+
 })
 
 router.post('/fileupload', function(req, res, next) {
