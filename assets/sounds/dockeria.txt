@@ -1,0 +1,7 @@
+# Joukot
+
+# Työtehtävät (jobit)
+set J
+
+# Työntekijät
+set T 

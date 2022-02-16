@@ -8,10 +8,30 @@
 <body>
   <h1>Upload files</h1>
   <p>
-    Täältä voi ladata lisää tiedostoja.
+    Here you can upload sound files in .wav-format.
     <form action="fileupload" method="post" enctype="multipart/form-data">
-        <input type="file" name="filetoupload"> <br>
-        <input type="submit">
+        <input type="File" name="filetoupload" accept=".wav"> <br>
+        <p>Choose the place to store the sound from the dropdown menu. There are 16 slots for different sounds. <br> WARNING: Old sound will be deleted from that place.</p>
+        <label for="place">Store place</label>
+        <select name="storeplace" id="place">
+          <option value="1.wav">1</option>
+          <option value="2.wav">2</option>
+          <option value="3.wav">3</option>
+          <option value="4.wav">4</option>
+          <option value="5.wav">5</option>
+          <option value="6.wav">6</option>
+          <option value="7.wav">7</option>
+          <option value="8.wav">8</option>
+          <option value="9.wav">9</option>
+          <option value="10.wav">10</option>
+          <option value="11.wav">11</option>
+          <option value="12.wav">12</option>
+          <option value="13.wav">13</option>
+          <option value="14.wav">14</option>
+          <option value="15.wav">15</option>
+          <option value="16.wav">16</option>
+        </select>
+        <input type="submit" value="Submit"/>
     </form>
   </p>
 </body>
