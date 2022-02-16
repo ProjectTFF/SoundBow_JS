@@ -4,6 +4,7 @@ var path = require("path");
 var formidable = require('formidable');
 var fs = require('fs');
 const { stringify } = require('querystring');
+const mv = require("mv");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -73,7 +74,7 @@ router.post('/fileupload', function(req, res, next) {
     var new_filename = fields.storeplace
     var newpath = path.join(__dirname, '../assets/sounds/', new_filename);
     console.log("uusi polku olisi " + newpath);
-    fs.rename(oldpath, newpath, function(err) {
+    mv(oldpath, newpath, function(err) {
       if (err) {
         console.log(err);
         throw err;
