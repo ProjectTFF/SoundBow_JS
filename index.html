@@ -106,6 +106,7 @@
 		function PlayPentaSound(sel)
 		{
 			console.log(audioElementArrayPentascale.length);
+			console.log("selection : " + sel)
 			if((sel>=1)&&(sel<=8))
 			{
 				audioElementArrayPentascale[sel-1].load;
@@ -118,6 +119,7 @@
 		{
 			
 			console.log(audioElementArrayHarmonicscale.length);
+			console.log("selection : " + sel)
 			if((sel>=1)&&(sel<=8))
 			{
 				audioElementArrayHarmonicscale[sel-1].load;
@@ -132,6 +134,10 @@
 	
 		<body>
 		<div id="content">
+			<button id="recordButton" width="60px" height="60px" position="fixed" bottom="0" z-index="999">
+				<img src="./assets/pix/record_btn.png" alt="RECORD" width="60px" height="60px">
+
+			</button>
 			<div>
 				<canvas id="SoundBowJS" data-processing-sources="./assets/code/SoundBow_JS.pde" width="1000" height="600">
 					<p>Your browser does not support the canvas tag.</p>
