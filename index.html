@@ -185,7 +185,7 @@
 				let canvas = document.getElementById("SoundBowJS");
 				var audioContext = new AudioContext();
 				var dest = audioContext.createMediaStreamDestination();
-
+				
 				// Add each audio wall to stream
 				for (var i = 0; i < 8; i++) {
 					let addedStream1 = audioElementArrayPentascale[i].captureStream();
@@ -200,7 +200,7 @@
 
 
 				}
-				
+				dest.stream.addTrack(canvas.captureStream(30).getTracks()[0]);
 
 				resolve(dest.stream);
 			})
@@ -259,7 +259,7 @@ startButton.addEventListener("click", function() {
 					return new Promise(resolve => preview.onplaying = resolve);
 				}).then(() => startRecording(preview.captureStream(), recordingTimeMS))
 					.then(recordedChunks => {
-						let recordedBlob = new Blob(recordedChunks, { type: "audio/mp4" });
+						let recordedBlob = new Blob(recordedChunks, { type: "video/mp4" });
 						recording.src = URL.createObjectURL(recordedBlob);
 						downloadButton.href = recording.src;
 						downloadButton.download = "RecordedSound.mp4";
