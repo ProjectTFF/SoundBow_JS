@@ -180,153 +180,100 @@
 
 
 	<script>
-		let preview = document.getElementById("preview");
-		let recording = document.getElementById("recording");
-		let startButton = document.getElementById("startButton");
-		let stopButton = document.getElementById("stopButton");
-		let downloadButton = document.getElementById("downloadButton");
-		let logElement = document.getElementById("log");
-
-		let recordingTimeMS = 5000;
-
-		function log(msg) {
-			logElement.innerHTML += msg + "\n";
-		}
-
-		function wait(delayInMS) {
-			return new Promise(resolve => setTimeout(resolve, delayInMS));
-		}
-
-		function startRecording(stream, lengthInMS) {
-			let recorder = new MediaRecorder(stream);
-			var chunks = [];
-
-            recorder.ondataavailable = function (e) {
-                data.push(e.data);
-            };
-
-            recorder.onstop = function (e) {
-                var blob = new Blob(chunks, { 'type': 'video/mp4' });
-                chunks = [];
-                var videoURL = URL.createObjectURL(blob);
-                video.src = videoURL;
-            };
-            recorder.ondataavailable = function (e) {
-                chunks.push(e.data);
-            };
-
-            recorder.start();
-            setInterval(draw, 300);
-            setTimeout(function () { mediaRecorder.stop(); }, 5000);
-
-			log(recorder.state + " for " + (lengthInMS / 1000) + " seconds...");
-
-			let stopped = new Promise((resolve, reject) => {
-				recorder.onstop = resolve;
-				recorder.onerror = event => reject(event.name);
-			});
-
-			let recorded = wait(lengthInMS).then(
-				() => recorder.state == "recording" && recorder.stop()
-			);
-
-			return Promise.all([
-				stopped,
-				recorded
-			])
-				.then(() => data);
-		}
-
-		function stop(stream) {
-			stream.getTracks().forEach(track => track.stop());
-		}
-
-		function getRecorder() {
+		function getStream() {
 			return new Promise((resolve, reject) => {
-                let canvas = document.getElementById("SoundBowJS");
+				let canvas = document.getElementById("SoundBowJS");
 				var audioContext = new AudioContext();
-                var dest = audioContext.createMediaStreamDestination();
+				var dest = audioContext.createMediaStreamDestination();
 
 				// Add each audio wall to stream
 				for (var i = 0; i < 8; i++) {
 					let addedStream1 = audioElementArrayPentascale[i].captureStream();
 					let addedStream2 = audioElementArrayHarmonicscale[i].captureStream();
-                    audioIn_01 = audioContext.createMediaStreamSource(addedStream1);
+					audioIn_01 = audioContext.createMediaStreamSource(addedStream1);
 					audioIn_02 = audioContext.createMediaStreamSource(addedStream2);
 
-                    
 
-                    audioIn_01.connect(dest);
-                    audioIn_02.connect(dest);
 
-                    
+					audioIn_01.connect(dest);
+					audioIn_02.connect(dest);
+
+
 				}
-                var recorder = new MediaRecorder(dest.stream);
 				
-				resolve(recorder);
+
+				resolve(dest.stream);
 			})
 		}
-		startButton.addEventListener("click", function () {
-            getRecorder().then(mediaRecorder => {
 
-                var canvas = document.getElementById("SoundBowJS");
-                var ctx = canvas.getContext("2d");
+			let preview = document.getElementById("preview");
+			let recording = document.getElementById("recording");
+			let startButton = document.getElementById("startButton");
+			let stopButton = document.getElementById("stopButton");
+			let downloadButton = document.getElementById("downloadButton");
+			let logElement = document.getElementById("log");
 
-                var video = document.getElementById("recording");
+			let recordingTimeMS = 5000;
 
-                var colors = ["red", "blue", "yellow", "orange", "black", "white", "green"];
-                function draw() {
-                    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                }
-                draw();
+function log(msg) {
+				logElement.innerHTML += msg + "\n";
+}
 
+function wait(delayInMS) {
+	  return new Promise(resolve => setTimeout(resolve, delayInMS));
+}
 
-                var chunks = [];
-                mediaRecorder.ondataavailable = function (e) {
-                    chunks.push(e.data);
-                };
+function startRecording(stream, lengthInMS) {
+				let recorder = new MediaRecorder(stream);
+	  let data = [];
 
-                mediaRecorder.onstop = function (e) {
+	  recorder.ondataavailable = event => data.push(event.data);
+	  recorder.start();
+	  log(recorder.state + " for " + (lengthInMS/1000) + " seconds...");
 
-                    var blob = new Blob(chunks, { 'type': 'audio/mp3' });
-                    console.log(blob)
-                    chunks = [];
-                    var videoURL = URL.createObjectURL(blob);
-                    video.src = videoURL;
-                };
-                mediaRecorder.ondataavailable = function (e) {
-                    chunks.push(e.data);
-                };
+	  let stopped = new Promise((resolve, reject) => {
+				recorder.onstop = resolve;
+		recorder.onerror = event => reject(event.name);
+	  });
 
-                mediaRecorder.start();
-                setInterval(draw, 300);
-                setTimeout(function () { mediaRecorder.stop(); }, 5000);
-			})
-			return;
+	  let recorded = wait(lengthInMS).then(
+		() => recorder.state == "recording" && recorder.stop()
+	  );
 
-			getRecorder()
-				.then(stream => {
-				preview.srcObject = stream;
-				downloadButton.href = stream;
-				preview.captureStream = preview.captureStream || preview.mozCaptureStream;
-				return new Promise(resolve => preview.onplaying = resolve);
-			}).then(() => startRecording(preview.captureStream(), recordingTimeMS))
-				.then(recordedChunks => {
-					let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
-					recording.src = URL.createObjectURL(recordedBlob);
-					downloadButton.href = recording.src;
-					downloadButton.download = "RecordedVideo.webm";
+	  return Promise.all([
+		stopped,
+		recorded
+	  ])
+	  .then(() => data);
+}
 
-					log("Successfully recorded " + recordedBlob.size + " bytes of " +
-						recordedBlob.type + " media.");
-				})
-				.catch(log);
-		}, false);
+function stop(stream) {
+				stream.getTracks().forEach(track => track.stop());
+}
 
-		stopButton.addEventListener("click", function () {
-			stop(preview.srcObject);
-		}, false);
+startButton.addEventListener("click", function() {
+				getStream().then(stream => {
+					preview.srcObject = stream;
+					downloadButton.href = stream;
+					preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+					return new Promise(resolve => preview.onplaying = resolve);
+				}).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+					.then(recordedChunks => {
+						let recordedBlob = new Blob(recordedChunks, { type: "audio/mp4" });
+						recording.src = URL.createObjectURL(recordedBlob);
+						downloadButton.href = recording.src;
+						downloadButton.download = "RecordedSound.mp4";
+
+						log("Successfully recorded " + recordedBlob.size + " bytes of " +
+							recordedBlob.type + " media.");
+					})
+					.catch(log);
+}, false);
+
+stopButton.addEventListener("click", function() {
+				stop(preview.srcObject);
+}, false);
+
 	</script>
 </head>
 	
