@@ -23,6 +23,8 @@ info@binaura.net
   
   boolean clearWires = false;
   boolean resetWalls = false;
+  boolean getDrawing = false;
+  boolean setDrawing = false;
   boolean showIntro = true; 
   
   boolean initialized = false; // run setup once
@@ -119,6 +121,35 @@ info@binaura.net
       resetWalls = false;
 
     }
+	
+	if (getDrawing)
+	{
+		getArrayInfo(wireArray,wallArray, xArray);
+		getDrawing = false;
+	}
+	
+	if (setDrawing)
+	{
+		var obj = {
+			wall: "",
+			wire: "",
+			xArr: "",
+			bottomBar: ""
+		}
+		
+	setArrayInfo(obj);
+	wallArray = [...obj.wall];
+    xArray = [...obj.xArr];
+	wireArray = [...obj.wire];
+
+
+
+	getArrayInfo(wireArray, wallArray, xArray, bar);
+	
+	setDrawing = false;
+	
+	}
+	
     
     myGui.mask();
     
@@ -140,6 +171,8 @@ info@binaura.net
     myGui.scaleButtons();
     myGui.clearButton();
     myGui.resetButton();
+	myGui.getDrawingButton();
+	myGui.setDrawingButton();
 
 
   }
@@ -211,6 +244,19 @@ info@binaura.net
         myGui.resetPressed = true;
         resetWalls = true;
       }
+	  if((mouseX>width-60) && (mouseY > height-180) && (mouseY < height-130))
+      {
+        myGui.getDrawingAlpha = 255;
+        myGui.getDrawingPressed = true;
+		getDrawing = true;
+      }
+	  if((mouseX>width-60) && (mouseY > height-230) && (mouseY < height-180))
+      {
+        myGui.setDrawingAlpha = 255;
+        myGui.setDrawingPressed = true;
+		setDrawing = true;
+      }
+	  
   }
 
 class GUI
@@ -225,12 +271,16 @@ class GUI
   float scale1Alpha = 0;
   float scale2Alpha = 0;
   float scale3Alpha = 0;
+  float getDrawingAlpha = 0;
+  float setDrawingAlpha = 0;
   
   boolean clearPressed = false;
   boolean resetPressed = false;
   boolean scale1Pressed = false;
   boolean scale2Pressed = false;
   boolean scale3Pressed = false;
+  boolean getDrawingPressed = false;
+  boolean setDrawingPressed = false;
   
   GUI() 
   {
@@ -332,6 +382,40 @@ class GUI
       stroke(255, resetAlpha);
       ellipse(width-40,height-60,50+(255-resetAlpha)/2,50+(255-resetAlpha)/2);
       if(resetAlpha<1)  resetPressed = false;
+    }
+  }
+  
+  public void getDrawingButton()
+  {
+	noStroke();
+    colorMode(HSB);
+    tint(140,100,180);
+    image(btn5, width-40,height-160,50,50);
+  
+    if(getDrawingPressed)
+    {
+      getDrawingAlpha -= 15;
+      noFill();
+      stroke(255, getDrawingAlpha);
+      ellipse(width-40,height-160,50+(255-getDrawingAlpha)/2,50+(255-getDrawingAlpha)/2);
+      if(getDrawingAlpha<1)  getDrawingPressed = false;
+    }
+  }
+  
+    public void setDrawingButton()
+  {
+	noStroke();
+    colorMode(HSB);
+    tint(140,100,180);
+    image(btn5, width-40,height-210,50,50);
+  
+    if(setDrawingPressed)
+    {
+      setDrawingAlpha -= 15;
+      noFill();
+      stroke(255, setDrawingAlpha);
+      ellipse(width-40,height-160,50+(255-setDrawingAlpha)/2,50+(255-setDrawingAlpha)/2);
+      if(setDrawingAlpha<1)  setDrawingPressed = false;
     }
   }
   
@@ -674,5 +758,7 @@ class Wire
     playing = true;
     index = 0;
   }
+  
+
 }
 
