@@ -1,87 +1,92 @@
-<!DOCTYPE html>
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>SoundBow JS </title>
-		
-		<script type="text/javascript">
-		
-		// <![CDATA[  
-    	var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));  
-    	if (mobile) 
-    	{  
-        	document.location = "http://www.binaura.net/stc/wrx/soundbow/mobile.html";  
-    	}  
+﻿<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>SoundBow JS </title>
+
+	<script type="text/javascript">
+
+		// <![CDATA[
+		var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
+		if (mobile) {
+			document.location = "http://www.binaura.net/stc/wrx/soundbow/mobile.html";
+		}
 		// ]]>
 
 		var viewportwidth;
- 		var viewportheight;
-  
- 		// the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
-  
- 		viewportwidth = window.innerWidth,
-      	viewportheight = window.innerHeight
- 		
-		</script> 
-		
-		<style type="text/css">
-		body 
-		{
-	  		background-color: #333; color: #bbb; line-height: normal;
-	  		font-family: Lucida Grande, Lucida Sans, Arial, Helvetica Neue, Verdana, Geneva, sans-serif;
-	  		font-size: 11px; font-weight: normal; text-decoration: none;
-		  	line-height: 1.5em;
-		}
-		
-		a img 
-		{ 
-			border: 0px solid transparent;
-		}
-		
-		a, a:link, a:visited, a:active, a:hover 
-		{ 
-			color: #cdcdcd; text-decoration: underline;
-		}
-		
-		h1 
-		{
-	    	font-family: Arial, Helvetica Neue, Verdana, Geneva, sans-serif;
-			width: 100%; letter-spacing: 0.1em;
-			margin-bottom: 1em; font-size: 1.65em;
+		var viewportheight;
+
+		// the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
+
+		viewportwidth = window.innerWidth,
+			viewportheight = window.innerHeight
+
+	</script>
+
+	<style type="text/css">
+		body {
+			background-color: #333;
+			color: #bbb;
+			line-height: normal;
+			font-family: Lucida Grande, Lucida Sans, Arial, Helvetica Neue, Verdana, Geneva, sans-serif;
+			font-size: 11px;
+			font-weight: normal;
+			text-decoration: none;
+			line-height: 1.5em;
 		}
 
-		canvas 
-		{ 
-			display: block; 
-			outline: 0px; 
+		a img {
+			border: 0px solid transparent;
+		}
+
+		a, a:link, a:visited, a:active, a:hover {
+			color: #cdcdcd;
+			text-decoration: underline;
+		}
+
+		h1 {
+			font-family: Arial, Helvetica Neue, Verdana, Geneva, sans-serif;
+			width: 100%;
+			letter-spacing: 0.1em;
+			margin-bottom: 1em;
+			font-size: 1.65em;
+		}
+
+		canvas {
+			display: block;
+			outline: 0px;
 			position: fixed;
-			top:0px;
-    		left:0px;
+			top: 0px;
+			left: 0px;
 			/* for iPads*/
 			-webkit-user-select: none;
 		}
 
-		#content 
-		{ 
-			margin: 50px auto 0px auto; padding: 25px 25px 15px 25px;
-			width: 1000px; min-width: 300px; overflow: auto;
-			border-left: 1px solid #444; border-top: 1px solid #444; 
-			border-right: 1px solid #333; border-bottom: 1px solid #333;
+		#content {
+			margin: 50px auto 0px auto;
+			padding: 25px 25px 15px 25px;
+			width: 1000px;
+			min-width: 300px;
+			overflow: auto;
+			border-left: 1px solid #444;
+			border-top: 1px solid #444;
+			border-right: 1px solid #333;
+			border-bottom: 1px solid #333;
 			background-color: #3d3d3d;
 		}
-		</style>
-		<!--[if lt IE 9]>
-			<script type="text/javascript">alert("Your browser does not support the canvas tag.");</script>
-		<![endif]-->
-		<script src="./assets/code/processing.js" type="text/javascript"></script>
-		<script src="./assets/code/jQuery.js" type="text/javascript"></script>
-		
-		<script type="text/javascript">
+	</style>
+	<!--[if lt IE 9]>
+		<script type="text/javascript">alert("Your browser does not support the canvas tag.");</script>
+	<![endif]-->
+	<script src="./assets/code/processing.js" type="text/javascript"></script>
+	<script src="./assets/code/jQuery.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
 		// convenience function to get the id attribute of generated sketch html element
-		function getProcessingSketchId () { return 'SoundBowJS'; }
-		</script>
+		function getProcessingSketchId() { return 'SoundBowJS'; }
+	</script>
 
 
-		<script type="text/javascript" language="javascript" >
+	<script type="text/javascript" language="javascript">
 
 
 		var audioElementArrayPentascale = new Array();
@@ -89,71 +94,241 @@
 		var savedWall;
 		var savedWire;
 		var savedXArr;
-		
 
-		for ( var i=0; i<8; i++ )
-		{
+
+		for (var i = 0; i < 8; i++) {
 
 			//	load sounds for pentaton scale
 
 			audioElementArrayPentascale[i] = document.createElement('audio');
-			var index = i+1;
-			audioElementArrayPentascale[i].setAttribute('src', './assets/sounds/' + index +'.wav');
+			var index = i + 1;
+			audioElementArrayPentascale[i].setAttribute('src', './assets/sounds/' + index + '.wav');
 
 			//	load sounds for harmonic scale
 
 			audioElementArrayHarmonicscale[i] = document.createElement('audio');
-			audioElementArrayHarmonicscale[i].setAttribute('src', './assets/sounds/1' + index +'.wav');
+			audioElementArrayHarmonicscale[i].setAttribute('src', './assets/sounds/1' + index + '.wav');
 		}
 
-		function PlayPentaSound(sel)
-		{
-		    var playbackElement;
-			
+		function PlayPentaSound(sel) {
+			var playbackElement;
+
 			console.log(audioElementArrayPentascale.length);
 			console.log("selection : " + sel)
-			if((sel>=1)&&(sel<=8))
-			{
-				audioElementArrayPentascale[sel-1].load;
-				audioElementArrayPentascale[sel-1].currentTime = 0;
-				audioElementArrayPentascale[sel-1].play();
+			if ((sel >= 1) && (sel <= 8)) {
+				audioElementArrayPentascale[sel - 1].load;
+				audioElementArrayPentascale[sel - 1].currentTime = 0;
+				audioElementArrayPentascale[sel - 1].play();
 			}
 		}
 
-		function PlayHarmonicSound(sel)
-		{
-			
+		function PlayHarmonicSound(sel) {
+
 			console.log(audioElementArrayHarmonicscale.length);
 			console.log("selection : " + sel)
-			if((sel>=1)&&(sel<=8))
-			{
-				audioElementArrayHarmonicscale[sel-1].load;
-				audioElementArrayHarmonicscale[sel-1].currentTime = 0;
-				audioElementArrayHarmonicscale[sel-1].play();
+			if ((sel >= 1) && (sel <= 8)) {
+				audioElementArrayHarmonicscale[sel - 1].load;
+				audioElementArrayHarmonicscale[sel - 1].currentTime = 0;
+				audioElementArrayHarmonicscale[sel - 1].play();
 			}
 		}
-		
-		
-		function getArrayInfo(wire, wall, xArr, bar)
-		{
+
+
+		function getArrayInfo(wire, wall, xArr, bar) {
 			savedWall = [...wall];
 			savedWire = [...wire];
-			savedXArr = [...xArr]; 
+			savedXArr = [...xArr];
 			console.log(xArr)
 
 		}
-		
-		function setArrayInfo(obj)
-		{
+
+		function setArrayInfo(obj) {
 			obj.wall = savedWall;
 			obj.wire = savedWire;
 			obj.xArr = savedXArr;
-			
+
 
 		}
-		
-		</script>
-		</head>
+
+
+	</script>
+
+
+	<div class="left">
+		<div id="startButton" class="button">
+			Start
+		</div>
+		<h2>Preview</h2>
+		<video id="preview" width="160" height="120" autoplay muted></video>
+	</div>
+
+	<div class="right">
+		<div id="stopButton" class="button">
+			Stop
+		</div>
+		<h2>Recording</h2>
+		<video id="recording" width="160" height="120" controls></video>
+		<a id="downloadButton" class="button">
+			Download
+		</a>
+	</div>
+
+	<div class="bottom">
+		<pre id="log"></pre>
+	</div>
+
+
+
+	<script>
+		let preview = document.getElementById("preview");
+		let recording = document.getElementById("recording");
+		let startButton = document.getElementById("startButton");
+		let stopButton = document.getElementById("stopButton");
+		let downloadButton = document.getElementById("downloadButton");
+		let logElement = document.getElementById("log");
+
+		let recordingTimeMS = 5000;
+
+		function log(msg) {
+			logElement.innerHTML += msg + "\n";
+		}
+
+		function wait(delayInMS) {
+			return new Promise(resolve => setTimeout(resolve, delayInMS));
+		}
+
+		function startRecording(stream, lengthInMS) {
+			let recorder = new MediaRecorder(stream);
+			var chunks = [];
+
+            recorder.ondataavailable = function (e) {
+                data.push(e.data);
+            };
+
+            recorder.onstop = function (e) {
+                var blob = new Blob(chunks, { 'type': 'video/mp4' });
+                chunks = [];
+                var videoURL = URL.createObjectURL(blob);
+                video.src = videoURL;
+            };
+            recorder.ondataavailable = function (e) {
+                chunks.push(e.data);
+            };
+
+            recorder.start();
+            setInterval(draw, 300);
+            setTimeout(function () { mediaRecorder.stop(); }, 5000);
+
+			log(recorder.state + " for " + (lengthInMS / 1000) + " seconds...");
+
+			let stopped = new Promise((resolve, reject) => {
+				recorder.onstop = resolve;
+				recorder.onerror = event => reject(event.name);
+			});
+
+			let recorded = wait(lengthInMS).then(
+				() => recorder.state == "recording" && recorder.stop()
+			);
+
+			return Promise.all([
+				stopped,
+				recorded
+			])
+				.then(() => data);
+		}
+
+		function stop(stream) {
+			stream.getTracks().forEach(track => track.stop());
+		}
+
+		function getRecorder() {
+			return new Promise((resolve, reject) => {
+                let canvas = document.getElementById("SoundBowJS");
+				var audioContext = new AudioContext();
+                var dest = audioContext.createMediaStreamDestination();
+
+				// Add each audio wall to stream
+				for (var i = 0; i < 8; i++) {
+					let addedStream1 = audioElementArrayPentascale[i].captureStream();
+					let addedStream2 = audioElementArrayHarmonicscale[i].captureStream();
+                    audioIn_01 = audioContext.createMediaStreamSource(addedStream1);
+					audioIn_02 = audioContext.createMediaStreamSource(addedStream2);
+
+                    
+
+                    audioIn_01.connect(dest);
+                    audioIn_02.connect(dest);
+
+                    
+				}
+                var recorder = new MediaRecorder(dest.stream);
+				
+				resolve(recorder);
+			})
+		}
+		startButton.addEventListener("click", function () {
+            getRecorder().then(mediaRecorder => {
+
+                var canvas = document.getElementById("SoundBowJS");
+                var ctx = canvas.getContext("2d");
+
+                var video = document.getElementById("recording");
+
+                var colors = ["red", "blue", "yellow", "orange", "black", "white", "green"];
+                function draw() {
+                    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                draw();
+
+
+                var chunks = [];
+                mediaRecorder.ondataavailable = function (e) {
+                    chunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = function (e) {
+
+                    var blob = new Blob(chunks, { 'type': 'audio/mp3' });
+                    console.log(blob)
+                    chunks = [];
+                    var videoURL = URL.createObjectURL(blob);
+                    video.src = videoURL;
+                };
+                mediaRecorder.ondataavailable = function (e) {
+                    chunks.push(e.data);
+                };
+
+                mediaRecorder.start();
+                setInterval(draw, 300);
+                setTimeout(function () { mediaRecorder.stop(); }, 5000);
+			})
+			return;
+
+			getRecorder()
+				.then(stream => {
+				preview.srcObject = stream;
+				downloadButton.href = stream;
+				preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+				return new Promise(resolve => preview.onplaying = resolve);
+			}).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+				.then(recordedChunks => {
+					let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+					recording.src = URL.createObjectURL(recordedBlob);
+					downloadButton.href = recording.src;
+					downloadButton.download = "RecordedVideo.webm";
+
+					log("Successfully recorded " + recordedBlob.size + " bytes of " +
+						recordedBlob.type + " media.");
+				})
+				.catch(log);
+		}, false);
+
+		stopButton.addEventListener("click", function () {
+			stop(preview.srcObject);
+		}, false);
+	</script>
+</head>
 	
 		<body>
 		<div id="content">
@@ -172,4 +347,5 @@
 			<h1>SoundBow_JS</h1>
 		</div>
 	</body>
+
 </html>
