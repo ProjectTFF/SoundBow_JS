@@ -91,9 +91,6 @@
 
 		var audioElementArrayPentascale = new Array();
 		var audioElementArrayHarmonicscale = new Array();
-		var savedWall;
-		var savedWire;
-		var savedXArr;
 
 
 		for (var i = 0; i < 8; i++) {
@@ -133,22 +130,6 @@
 			}
 		}
 
-
-		function getArrayInfo(wire, wall, xArr, bar) {
-			savedWall = [...wall];
-			savedWire = [...wire];
-			savedXArr = [...xArr];
-			console.log(xArr)
-
-		}
-
-		function setArrayInfo(obj) {
-			obj.wall = savedWall;
-			obj.wire = savedWire;
-			obj.xArr = savedXArr;
-
-
-		}
 
 
 	</script>
