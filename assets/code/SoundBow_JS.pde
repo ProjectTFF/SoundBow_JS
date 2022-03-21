@@ -7,7 +7,7 @@ info@binaura.net
 ---------------------------------------------------------------------------------------------------------------------------*/
 
 
-  final int MAX_NUMBER_OF_WIRES = 6; 
+  final int MAX_NUMBER_OF_WIRES = 1; 
   final int NUMBER_OF_WALLS = 9;
   
   int counter;
@@ -37,7 +37,7 @@ info@binaura.net
     {
       //  create sound engine here
       
-      frameRate(30);
+      frameRate(120);
       background(0);
       colorMode(HSB, 255);
       bar = height - 80;
@@ -228,16 +228,12 @@ class GUI
   float scale1Alpha = 0;
   float scale2Alpha = 0;
   float scale3Alpha = 0;
-  float getDrawingAlpha = 0;
-  float setDrawingAlpha = 0;
   
   boolean clearPressed = false;
   boolean resetPressed = false;
   boolean scale1Pressed = false;
   boolean scale2Pressed = false;
   boolean scale3Pressed = false;
-  boolean getDrawingPressed = false;
-  boolean setDrawingPressed = false;
   
   GUI() 
   {
