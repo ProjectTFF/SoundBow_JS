@@ -548,8 +548,8 @@ class Wire
     size = _s;
     sound = new Sound();    
   } 
-    
-  void update() 
+
+void update() 
   {
     if (recording) 
     {  
@@ -586,9 +586,15 @@ class Wire
         line((Integer)touchPosX.get(i), (Integer)touchPosY.get(i), (Integer)touchPosX.get(i+1), (Integer)touchPosY.get(i+1));
       }
     } 
-    
     else if (playing) 
-    {
+    {      
+
+      if(index == 0)
+      {
+        startButtonClick();
+      }
+      
+      
       if(index<=touchPosX.size())  
       {
         _x = (Integer)touchPosX.get(index); // parse out integers from Vector data
