@@ -88,4 +88,17 @@ router.post('/fileupload', function(req, res, next) {
   })
 })
 
+router.post('/send', function (request, response) {
+
+  let body = [];
+  request.on('data', (chunk) => {
+      body.push(chunk);
+  }).on('end', () => {
+      body = Buffer.concat(body).toString();
+      response.writeHead(200, { 'Content-Type': 'text/plain' });
+      response.write(body);
+      response.end();
+  });
+});
+
 module.exports = router;
