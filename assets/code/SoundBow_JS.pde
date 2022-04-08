@@ -7,7 +7,7 @@ info@binaura.net
 ---------------------------------------------------------------------------------------------------------------------------*/
 
 
-  final int MAX_NUMBER_OF_WIRES = 6; 
+  final int MAX_NUMBER_OF_WIRES = 1; 
   final int NUMBER_OF_WALLS = 9;
   
   int counter;
@@ -28,6 +28,9 @@ info@binaura.net
   boolean showIntro = true; 
   
   boolean initialized = false; // run setup once
+   
+
+
    
   public void setup() 
   {
@@ -65,6 +68,10 @@ info@binaura.net
       myGui = new GUI();
       initialized = true;
     }
+    savedBar = bar;
+    savedWallArray = wallArray;
+    savedWireArray = wireArray;
+    savedXArray = xArray;
   }
   
   public void draw() 
@@ -128,17 +135,68 @@ savedWallArray = wallArray;
 savedXArray = xArray;
 savedWireArray = wireArray;
 savedBar = bar;
-		getDrawing = false;
+
+wallValue = new ArrayList();
+for (let i = 0; i < wallArray.length; i++)
+{
+  
+  wallContainer = {
+  _x:wallArray[i]._x,
+  boxX:wallArray[i].boxX,
+  boxY:wallArray[i].boxY,
+  lenght:wallArray[i].length,
+  size:wallArray[i].size,
+  flash:wallArray[i].flash,
+  
+  over:wallArray[i].over,
+  press:wallArray[i].press,
+  locked:wallArray[i].locked,
+  otherslocked:wallArray[i].otherslocked,
+  dragged:wallArray[i].dragged,
+  others: null 
+  }
+
+}
+wallValue[i] = wallContainer;
+
+
+
+
+wireValue = new ArrayList();
+for (let i = 0; i < wireArray.length; i++){
+  wireContainer = 
+  {_x:wireArray[i]._x,
+  _y:wireArray[i]._y,
+  _xNext:[i]._xNext,
+  __xArray: wireArray[i].__xArray,
+  _coll:wireArray[i]._coll,
+  size:wireArray[i].size, // size of wall (offset for collision)
+  touchPosX:wireArray[i].touchPosX,
+  touchPosY:wireArray[i].touchPosY
+  }
+   wireValue[i] = wireContainer
+}
+
+
+sendDrawing({savedWireArr: wireValue, savedWallArr: wallValue, savedXArr: savedXArray.values, savBar: savedBar.values});
+getDrawing = false;
 	}
 	
 	if (setDrawing)
 	{
+    
 	wallArray = savedWallArray;
 	wireArray = savedWireArray;
   xArray = savedXArray
   bar = savedBar;
+
+
+
+
+
+
+
   setDrawing = false;
-  console.log(wallArray)
 	}
 	
     
