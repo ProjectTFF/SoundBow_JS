@@ -637,26 +637,20 @@ void update()
         canPlay = false;
         stopButtonPressed = false;
       }
-      startPlay = getCanPlay();
-        if(startPlay)
-        {
-          canPlay = true;
-        }
         recordingInProgress = getRecordingInProgress();
-        if(recordingInProgress && index != touchPosX.size()-1 && canPlay)
+        if(recordingInProgress && index != touchPosX.size()-1)
         {
-          index++;
+          canPlay = true
         }
-        else if(!recordingInProgress){
-          index++;
-          canPlay = true;
-        }
-  
-        else
-        {
-          index = 0;
+
+        else {
+          canPlay = true
         }
       
+        if(canPlay){
+          index++
+        }
+
         if (index == touchPosX.size()) 
         {
           playIt();
