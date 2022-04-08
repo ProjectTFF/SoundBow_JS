@@ -31,9 +31,12 @@ info@binaura.net
    
 
 
-   
+  
   public void setup() 
   {
+    
+
+   
     counter = 0;
     
     size(viewportwidth,viewportheight);
@@ -178,7 +181,7 @@ for (let i = 0; i < wireArray.length; i++){
 }
 
 
-sendDrawing({savedWireArr: wireValue, savedWallArr: wallValue, savedXArr: savedXArray.values, savBar: savedBar.values});
+sendDrawing({savedWireArr: wireValue, savedWallArr: wallValue, savedXArr: savedXArray.values, savBar: savedBar});
 getDrawing = false;
 	}
 	
@@ -221,7 +224,7 @@ getDrawing = false;
     myGui.clearButton();
     myGui.resetButton();
 	myGui.getDrawingButton();
-	myGui.setDrawingButton();
+//	myGui.setDrawingButton();
 
 
   }
@@ -299,12 +302,12 @@ getDrawing = false;
         myGui.getDrawingPressed = true;
 		getDrawing = true;
       }
-	  if((mouseX>width-60) && (mouseY > height-230) && (mouseY < height-180))
-      {
-        myGui.setDrawingAlpha = 255;
-        myGui.setDrawingPressed = true;
-		setDrawing = true;
-      }
+	  //if((mouseX>width-60) && (mouseY > height-230) && (mouseY < height-180))
+    //  {
+    //    myGui.setDrawingAlpha = 255;
+    //    myGui.setDrawingPressed = true;
+		//setDrawing = true;
+    //  }
 	  
   }
 
@@ -312,7 +315,7 @@ class GUI
 {
   int _trigger;
   PImage introImage;
-  PImage btn1, btn2, btn4, btn5;
+  PImage btn1, btn2, btn4, btn5, btn6;
   
   float fadeOut = 255;
   float clearAlpha = 0;
@@ -338,6 +341,7 @@ class GUI
     btn2 = loadImage("./assets/pix/btn_2.png");
     btn4 = loadImage("./assets/pix/btn_4.png");
     btn5 = loadImage("./assets/pix/btn_5.png");
+    btn6 = loadImage("./assets/pix/btn_6.png");
   } 
   
   public void drawintroImage()
@@ -439,7 +443,7 @@ class GUI
 	noStroke();
     colorMode(HSB);
     tint(140,100,180);
-    image(btn5, width-40,height-160,50,50);
+    image(btn6, width-40,height-160,50,50);
   
     if(getDrawingPressed)
     {
@@ -456,7 +460,7 @@ class GUI
 	noStroke();
     colorMode(HSB);
     tint(140,100,180);
-    image(btn5, width-40,height-210,50,50);
+    image(btn6, width-40,height-210,50,50);
   
     if(setDrawingPressed)
     {
