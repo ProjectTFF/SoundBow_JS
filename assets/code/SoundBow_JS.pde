@@ -526,7 +526,10 @@ class Wire
 {
   boolean recording = false;
   boolean playing = false;
-  
+  boolean canPlay = true;
+  boolean stopButtonPressed = false;
+  boolean startPlay = true;
+
   int index = 0;
     
   int _x;
@@ -580,7 +583,7 @@ void update()
       touchPosY.add(mouseY);
       index++;
     
-      stroke(255,100,255);  
+      stroke(255,255,100);  
       for(int i=0; i<touchPosX.size()-1; i++) 
       {
         line((Integer)touchPosX.get(i), (Integer)touchPosY.get(i), (Integer)touchPosX.get(i+1), (Integer)touchPosY.get(i+1));
@@ -589,12 +592,13 @@ void update()
     else if (playing) 
     {      
 
-      if(index == 0)
-      {
-        startButtonClick();
-      }
+
+      
+
+
       
       
+
       if(index<=touchPosX.size())  
       {
         _x = (Integer)touchPosX.get(index); // parse out integers from Vector data
@@ -613,16 +617,45 @@ void update()
       {
       
         noStroke();
-        fill(255);     
+        fill(255);
         ellipse(_x, _y, 10, 10);
-        stroke(100);
+        int red = 255;
+        int green = 255;
+        int blue = 100 + 155/(touchPosX.size()-1)*index;
+        stroke(red,green, blue);
       
         for(int i=0; i<touchPosX.size()-1; i++) 
         {
           line((Integer)touchPosX.get(i), (Integer)touchPosY.get(i), (Integer)touchPosX.get(i+1), (Integer)touchPosY.get(i+1));
         }
         
-        index++;
+    if (getStartRecording())
+      {
+        console.log(getStartRecording());
+        startButtonClick();
+        index = 0;
+        canPlay = false;
+        stopButtonPressed = false;
+      }
+      startPlay = getCanPlay();
+        if(startPlay)
+        {
+          canPlay = true;
+        }
+        recordingInProgress = getRecordingInProgress();
+        if(recordingInProgress && index != touchPosX.size()-1 && canPlay)
+        {
+          index++;
+        }
+        else if(!recordingInProgress){
+          index++;
+          canPlay = true;
+        }
+  
+        else
+        {
+          index = 0;
+        }
       
         if (index == touchPosX.size()) 
         {

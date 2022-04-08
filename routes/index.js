@@ -5,6 +5,8 @@ var formidable = require('formidable');
 var fs = require('fs');
 const { stringify } = require('querystring');
 const mv = require("mv");
+const { request } = require('http');
+const { brotliDecompressSync } = require('zlib');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -86,6 +88,18 @@ router.post('/fileupload', function(req, res, next) {
       
     })
   })
+})
+
+router.post('/sendVideo', function (request, response){
+  let body = []
+  request.on('data', (chunk) => {
+    body.push(chunk)
+  }).on('end', () => {
+body = Buffer.concat(body).toString();
+response.write(body)
+response.end();
+  })
+
 })
 
 module.exports = router;
