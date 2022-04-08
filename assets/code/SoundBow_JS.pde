@@ -124,30 +124,21 @@ info@binaura.net
 	
 	if (getDrawing)
 	{
-		getArrayInfo(wireArray,wallArray, xArray);
+savedWallArray = wallArray;
+savedXArray = xArray;
+savedWireArray = wireArray;
+savedBar = bar;
 		getDrawing = false;
 	}
 	
 	if (setDrawing)
 	{
-		var obj = {
-			wall: "",
-			wire: "",
-			xArr: "",
-			bottomBar: ""
-		}
-		
-	setArrayInfo(obj);
-	wallArray = [...obj.wall];
-    xArray = [...obj.xArr];
-	wireArray = [...obj.wire];
-
-
-
-	getArrayInfo(wireArray, wallArray, xArray, bar);
-	
-	setDrawing = false;
-	
+	wallArray = savedWallArray;
+	wireArray = savedWireArray;
+  xArray = savedXArray
+  bar = savedBar;
+  setDrawing = false;
+  console.log(wallArray)
 	}
 	
     
