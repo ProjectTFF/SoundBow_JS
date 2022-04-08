@@ -94,10 +94,9 @@
 		function sendDrawing(arrayInfoSb)
 		{
 			arrayInfo = arrayInfoSb
-			document.getElementById("recaptcha").style.display ="block"
 			console.log(arrayInfo)
-			sendableData = JSON.stringify(arrayInfo)
-			console.log(sendableData)	
+			document.getElementById("recaptcha").style.display ="block"
+
 
 
 		}
@@ -108,28 +107,52 @@
 	
 		<body>
 		<script>
-		function onRecaptchaSuccess(token){
-			document.getElementById("recaptcha").style.display = "none"
-			//var xhr = new XMLHttpRequest();
-			//xhr.open("POST");
-			//xhr.setRequestHeader('Content-Type', 'application/json')
-					
+		
+		function sendJson(){
+				console.log("moi")
+			}
+		function onRecaptchaSuccess(token)
+		{
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", '/sendFile', true);
+			xhr.setRequestHeader('Content-Type', 'application/json')
+			xhr.addEventListener('onload', sendJson) 
+			xhr.send(JSON.stringify({value:"value"}))
 		}
+	
+					
+		
 		</script>
 		<div id="content">
 
 			<script src="https://www.google.com/recaptcha/api.js" async defer>
 			</script>
 			
-
-			<div id="content">
-				<div id="recaptcha"
-				class="g-recaptcha"
-				data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-				data-callback="onRecaptchaSuccess"
-				data-expired-callback="onRecaptchaResponseExpiry"
-				data-error-callback="onRecaptchaError"
-			  >
+			<script>
+			function hideRecaptcha(){
+				document.getElementById("recaptcha").style.display = "none"
+			}
+			</script>
+			
+			<div>
+				<div id="recaptcha">
+					<div
+					class="g-recaptcha"
+					data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+					data-callback="onRecaptchaSuccess"
+					data-expired-callback="onRecaptchaResponseExpiry"
+					data-error-callback="onRecaptchaError"
+					>
+			  
+					</div>
+					<button type="button" id="submitButton">
+					Submit your sound!
+					</button>
+					<button type="button" id="hideSubmit" onclick="hideRecaptcha()">
+					Hide these buttons!
+					<button>
+				</div>
+			  
 				</div>
 				<div>
 				<canvas id="SoundBowJS" data-processing-sources="./assets/code/SoundBow_JS.pde" width="1000" height="600">
