@@ -53,7 +53,8 @@ info@binaura.net
       //  walls & storing x values for them
       wallArray = new Wall[NUMBER_OF_WALLS];
       xArray = new int[NUMBER_OF_WALLS];
-        
+
+
       for(int i = 0; i < NUMBER_OF_WALLS; i++) 
       {
           wallArray[i] = new Wall(0, i*width/(NUMBER_OF_WALLS) +  (int)((width/NUMBER_OF_WALLS)/2f) , 55, wallArray);
@@ -65,6 +66,7 @@ info@binaura.net
       for (int i = 0; i < MAX_NUMBER_OF_WIRES; i++) 
       {
           wireArray[i] = new Wire(xArray, 55);
+
       }
       
       //  gui
@@ -126,6 +128,7 @@ info@binaura.net
       for (int i = 0; i < MAX_NUMBER_OF_WIRES; i++) 
       {
          wireArray[i].__xArray = xArray;
+         console.log(xArray);
       }
       
       resetWalls = false;
@@ -149,24 +152,39 @@ for (let i = 0; i < wallArray.length; i++)
   boxY:wallArray[i].boxY,
   lenght:wallArray[i].length,
   size:wallArray[i].size,
-  flash:wallArray[i].flash,
-  
-  over:wallArray[i].over,
-  press:wallArray[i].press,
-  locked:wallArray[i].locked,
-  otherslocked:wallArray[i].otherslocked,
-  dragged:wallArray[i].dragged,
-  others: null 
   }
+  wallValue[i] = wallContainer;
 
 }
-wallValue[i] = wallContainer;
-
-
 
 
 wireValue = new ArrayList();
 for (let i = 0; i < wireArray.length; i++){
+
+  tmpX = wireArray[i].touchPosX;
+  touchPosXContainer = new ArrayList();
+  touchPosYContainer = new ArrayList<Integer>();
+  if(tmpX)
+  {
+    touchPosXSize = tmpX.size();
+  }
+
+  
+
+  if(touchPosXSize > 0)
+  {
+      for (let j = 0; j < touchPosXSize; j++)
+    {
+      
+      touchPosXContainer[j] = (wireArray[i].(Integer)touchPosX.get(j));
+      touchPosYContainer[j] = (wireArray[i].(Integer)touchPosY.get(j));
+    }
+  }
+
+  
+
+
+
   wireContainer = 
   {_x:wireArray[i]._x,
   _y:wireArray[i]._y,
@@ -174,31 +192,299 @@ for (let i = 0; i < wireArray.length; i++){
   __xArray: wireArray[i].__xArray,
   _coll:wireArray[i]._coll,
   size:wireArray[i].size, // size of wall (offset for collision)
-  touchPosX:wireArray[i].touchPosX,
-  touchPosY:wireArray[i].touchPosY
+  touchPosX:touchPosXContainer,
+  touchPosY:touchPosYContainer,
   }
+
+
    wireValue[i] = wireContainer
+  
 }
 
 
-sendDrawing({savedWireArr: wireValue, savedWallArr: wallValue, savedXArr: savedXArray.values, savBar: savedBar});
+
+
+console.log(JSON.stringify(wireArray["0"]["touchPosX"]));
+sendDrawing({savedWireArr: wireValue, savedWallArr: wallValue, savedXArr: savedXArray, savBar: savedBar});
 getDrawing = false;
 	}
 	
 	if (setDrawing)
 	{
-    
-	wallArray = savedWallArray;
-	wireArray = savedWireArray;
-  xArray = savedXArray
-  bar = savedBar;
+
+data = {
+    "savedWireArr": {
+        "0": {
+            "_x": 1070,
+            "_y": 712,
+            "__xArray": [
+                75,
+                225.33333333333334,
+                375.6666666666667,
+                526,
+                676.3333333333334,
+                662.5,
+                977,
+                624.5,
+                1202.6666666666667
+            ],
+            "_coll": 9,
+            "size": 55,
+            "touchPosX": {
+                "0": 1070,
+                "1": 1070,
+                "2": 1070,
+                "3": 1046,
+                "4": 977,
+                "5": 831,
+                "6": 767,
+                "7": 748,
+                "8": 747,
+                "9": 747,
+                "10": 747,
+                "11": 747,
+                "12": 747,
+                "13": 592,
+                "14": 337,
+                "15": 256,
+                "16": 247,
+                "17": 244,
+                "18": 244,
+                "19": 244,
+                "20": 244,
+                "21": 244,
+                "22": 244,
+                "23": 311,
+                "24": 547,
+                "25": 637,
+                "26": 690,
+                "27": 740,
+                "28": 773,
+                "29": 731,
+                "30": 680,
+                "31": 645,
+                "32": 624,
+                "33": 605,
+                "34": 559,
+                "35": 546,
+                "36": 530,
+                "37": 546,
+                "38": 573,
+                "39": 626,
+                "40": 677,
+                "41": 705,
+                "42": 716,
+                "43": 738,
+                "44": 785,
+                "45": 805,
+                "46": 829,
+                "47": 843,
+                "48": 851,
+                "49": 852,
+                "50": 852,
+                "51": 852,
+                "52": 829,
+                "53": 803,
+                "54": 795,
+                "55": 795,
+                "56": 909,
+                "57": 1033
+            },
+            "touchPosY": {
+                "0": 712,
+                "1": 712,
+                "2": 712,
+                "3": 708,
+                "4": 673,
+                "5": 499,
+                "6": 442,
+                "7": 437,
+                "8": 437,
+                "9": 437,
+                "10": 437,
+                "11": 437,
+                "12": 437,
+                "13": 429,
+                "14": 380,
+                "15": 395,
+                "16": 402,
+                "17": 407,
+                "18": 408,
+                "19": 408,
+                "20": 408,
+                "21": 408,
+                "22": 408,
+                "23": 354,
+                "24": 175,
+                "25": 139,
+                "26": 147,
+                "27": 190,
+                "28": 310,
+                "29": 452,
+                "30": 561,
+                "31": 633,
+                "32": 663,
+                "33": 679,
+                "34": 700,
+                "35": 701,
+                "36": 675,
+                "37": 511,
+                "38": 436,
+                "39": 338,
+                "40": 242,
+                "41": 204,
+                "42": 188,
+                "43": 191,
+                "44": 281,
+                "45": 319,
+                "46": 366,
+                "47": 413,
+                "48": 435,
+                "49": 442,
+                "50": 442,
+                "51": 445,
+                "52": 477,
+                "53": 507,
+                "54": 517,
+                "55": 519,
+                "56": 437,
+                "57": 371
+            }
+        }
+    },
+    "savedWallArr": {
+        "0": {
+            "_x": 0,
+            "boxX": 75,
+            "boxY": 846,
+            "lenght": 75,
+            "size": 55,
+        },
+        "1": {
+            "_x": 0,
+            "boxX": 225.33333333333334,
+            "boxY": 846,
+            "lenght": 225.33333333333334,
+            "size": 55,
+        },
+        "2": {
+            "_x": 0,
+            "boxX": 375.6666666666667,
+            "boxY": 846,
+            "lenght": 375.6666666666667,
+            "size": 55,
+        },
+        "3": {
+            "_x": 0,
+            "boxX": 526,
+            "boxY": 846,
+            "lenght": 526,
+            "size": 55,
+        },
+        "4": {
+            "_x": 0,
+            "boxX": 676.3333333333334,
+            "boxY": 846,
+            "lenght": 676.3333333333334,
+            "size": 55,
+        },
+        "5": {
+            "_x": 0,
+            "boxX": 662.5,
+            "boxY": 846,
+            "lenght": 662.5,
+            "size": 55,
+        },
+        "6": {
+            "_x": 0,
+            "boxX": 97,
+            "boxY": 84,
+            "lenght": 97,
+            "size": 55,
+        },
+        "7": {
+            "_x": 0,
+            "boxX": 624.5,
+            "boxY": 846,
+            "lenght": 624.5,
+            "size": 55,
+        },
+        "8": {
+            "_x": 0,
+            "boxX": 1250.1666666666667,
+            "boxY": 846,
+            "lenght": 1277.6666666666667,
+            "size": 55,
+        }
+    },
+    "savedXArr": [
+        75,
+        225.33333333333334,
+        375.6666666666667,
+        526,
+        676.3333333333334,
+        662.5,
+        977,
+        624.5,
+        1202.6666666666667
+    ],
+    "savBar": 849
+}
+
+
+tmpX = new ArrayList;
+tmpY = new ArrayList; 
+for (let key in data["savedWireArr"]["0"]["touchPosX"]) {
+  //tmpX.add(parseInt(data["savedWireArr"]["0"]["touchPosX"][key]));
+  //tmpY.add(parseInt(data["savedWireArr"]["0"]["touchPosX"][key]));
+
+ var numberX = parseInt(data["savedWireArr"]["0"]["touchPosX"][key]);
+ var numberY = parseInt(data["savedWireArr"]["0"]["touchPosY"][key]);
+
+  tmpX.add(parseInt(numberX));
+  tmpY.add(parseInt(numberY));
+}
 
 
 
+  wireArray["0"]["touchPosX"]= tmpX;
+  wireArray["0"]["touchPosY"] = tmpY;
 
 
 
+          //  reset walls
+      wallArray = new Wall[NUMBER_OF_WALLS];
+      xArray = data["savedXArr"];
+        
+      for(int i = 0; i < NUMBER_OF_WALLS; i++) 
+      { 
+          lenght  = data["savedWallArr"][i]["lenght"]
+          console.log(length)
+          wallArray[i] = new Wall(0, lenght , 55, wallArray);
+      }
+      
+      //  reset x values for walls
+      for ( int i = 0; i < NUMBER_OF_WALLS; i++ ) 
+        {
+          if(wallArray[i]!=null)
+          {
+          wallArray[i].release();
+          }
+          xArray[i] = wallArray[i].getNewX(i);
+        }
+      
+      //  wires
+      for (int i = 0; i < MAX_NUMBER_OF_WIRES; i++) 
+      {
+         wireArray[i].__xArray = xArray;
+      }
+  
 
+  
+  
+
+
+  
   setDrawing = false;
 	}
 	
@@ -224,7 +510,7 @@ getDrawing = false;
     myGui.clearButton();
     myGui.resetButton();
 	myGui.getDrawingButton();
-//	myGui.setDrawingButton();
+  myGui.setDrawingButton();
 
 
   }
@@ -302,12 +588,12 @@ getDrawing = false;
         myGui.getDrawingPressed = true;
 		getDrawing = true;
       }
-	  //if((mouseX>width-60) && (mouseY > height-230) && (mouseY < height-180))
-    //  {
-    //    myGui.setDrawingAlpha = 255;
-    //    myGui.setDrawingPressed = true;
-		//setDrawing = true;
-    //  }
+	  if((mouseX>width-60) && (mouseY > height-230) && (mouseY < height-180))
+      {
+        myGui.setDrawingAlpha = 255;
+        myGui.setDrawingPressed = true;
+		setDrawing = true;
+      }
 	  
   }
 
@@ -670,8 +956,8 @@ class Wire
   int _coll;
   int size; // size of wall (offset for collision)
     
-  ArrayList<Integer> touchPosX;
-  ArrayList<Integer> touchPosY;
+  ArrayList touchPosX;
+  ArrayList touchPosY;
     
   Sound sound;
   
@@ -801,8 +1087,8 @@ class Wire
     recording = true;
     index = 0;
       
-    touchPosX = new ArrayList<Integer>();
-    touchPosY = new ArrayList<Integer>(); 
+    touchPosX = new ArrayList;
+    touchPosY = new ArrayList; 
   }
     
   void playIt() 
